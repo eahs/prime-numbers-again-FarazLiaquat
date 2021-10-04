@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 namespace PrimeNumbersAgain
 {
     class Program
@@ -25,7 +28,30 @@ namespace PrimeNumbersAgain
 
         static int FindNthPrime(int n)
         {
-            return 0;
+            // wacky sieve of Eratosthenes
+            int max = 100000000;
+            var array = new BitArray(max, true);
+
+            for (int i = 2; i < max; i++)
+                if (array[i])
+                {
+                    for (int j = i * 2; j < max; j += i)
+                        array[j] = false;
+                }
+
+            int count = 0;
+            int x = 0;
+            for (int i = 1; i < max; i++)
+                if (array[i])
+                {
+                    count++;
+                    x = i;
+                    if (count == n)
+                    {
+                        break;
+                    }
+                }                        
+            return x;
         }
 
         static int GetNumber()
